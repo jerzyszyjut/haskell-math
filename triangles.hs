@@ -7,10 +7,10 @@ generateTriples :: Integer -> [(Integer, Integer, Integer)]
 generateTriples n = [(a, b, c) | a <- [1 .. n], b <- [a .. n], c <- [b .. n], a + b + c <= n, isRightTriangle (a, b, c)]
 
 generateTriplesSums :: Integer -> [Integer]
-generateTriplesSums n = sort $ map (\(a, b, c) -> a + b + c) $ generateTriples n
+generateTriplesSums n = map (\(a, b, c) -> a + b + c) $ generateTriples n
 
 generateTriplesWithMaxSums :: Integer -> [Integer]
-generateTriplesWithMaxSums n = nub $ filter (\x -> length (filter (== x) sums) == maxCount) sums
+generateTriplesWithMaxSums n = sort $ nub $ filter (\x -> length (filter (== x) sums) == maxCount) sums
   where
     sums = generateTriplesSums n
     maxCount = maximum $ map (\x -> length $ filter (== x) sums) sums
