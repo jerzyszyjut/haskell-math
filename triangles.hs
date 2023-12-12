@@ -1,4 +1,10 @@
-import Data.List (nub, sort)
+unique :: [Integer] -> [Integer]
+unique [] = []
+unique (x : xs) = x : unique (filter (/= x) xs)
+
+sort :: [Integer] -> [Integer]
+sort [] = []
+sort (x : xs) = sort (filter (< x) xs) ++ [x] ++ sort (filter (>= x) xs)
 
 isRightTriangle :: (Integer, Integer, Integer) -> Bool
 isRightTriangle (a, b, c) = a ^ 2 + b ^ 2 == c ^ 2
@@ -10,7 +16,7 @@ generateTriplesSums :: Integer -> [Integer]
 generateTriplesSums n = map (\(a, b, c) -> a + b + c) $ generateTriples n
 
 generateTriplesWithMaxSums :: Integer -> [Integer]
-generateTriplesWithMaxSums n = sort $ nub $ filter (\x -> length (filter (== x) sums) == maxCount) sums
+generateTriplesWithMaxSums n = sort $ unique $ filter (\x -> length (filter (== x) sums) == maxCount) sums
   where
     sums = generateTriplesSums n
     maxCount = maximum $ map (\x -> length $ filter (== x) sums) sums
